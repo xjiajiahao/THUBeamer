@@ -21,12 +21,12 @@
   {%
     \begin{beamercolorbox}[colsep=1.5pt]{upper separation line foot}
     \end{beamercolorbox}
-    \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
-      leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
-      \leavevmode{\usebeamerfont{author in head/foot}\insertshortauthor}%
-      \hfill%
-      {\usebeamerfont{institute in head/foot}\usebeamercolor[fg]{institute in head/foot}\insertshortinstitute}%
-    \end{beamercolorbox}%
+    % \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
+    %   leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
+    %   \leavevmode{\usebeamerfont{author in head/foot}\insertshortauthor}%
+    %   \hfill%
+    %   {\usebeamerfont{institute in head/foot}\usebeamercolor[fg]{institute in head/foot}\insertshortinstitute}%
+    % \end{beamercolorbox}%
     \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
       leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
       {\usebeamerfont{title in head/foot}\insertshorttitle}%
@@ -55,7 +55,7 @@
 \setbeamercolor{block title}{bg=qiushi}
 \setbeamercolor{block title example}{use={normal text,example text},fg=example text.fg!75!normal text.fg,bg=qiushi text.bg!75!black}
 \setbeamercolor{fine separation line}{}
-\setbeamercolor{item projected}{fg=black}
+\setbeamercolor{item projected}{fg=white}
 \setbeamercolor{palette sidebar primary}{use=normal text,fg=normal text.fg}
 \setbeamercolor{palette sidebar quaternary}{use=structure,fg=structure.fg}
 \setbeamercolor{palette sidebar secondary}{use=structure,fg=structure.fg}
@@ -86,3 +86,15 @@
 
 \mode
 <all>
+
+\RequirePackage[UTF8]{ctex}
+\RequirePackage{fontspec}
+\renewcommand\CJKfamilydefault{\CJKrmdefault}
+\setCJKmainfont{Source Han Serif SC}
+\setCJKfamilyfont{SongTi}{Source Han Serif SC}
+\providecommand*{\songti}{\CJKfamily{SongTi}}
+\setCJKsansfont{Source Han Sans SC}
+\setsansfont{Source Han Sans SC}
+\setCJKmonofont{Source Han Sans SC}
+\setCJKfamilyfont{HeiTi}{Source Han Sans SC}
+\providecommand*{\heiti}{\CJKfamily{HeiTi}}
