@@ -13,7 +13,7 @@
 %\usecolortheme{dolphin}
 %\useoutertheme{infolines}
 
-\useoutertheme[footline=authorinstitutetitle]{miniframes}
+\useoutertheme[footline=authorinstitutetitle,subsection=false]{miniframes}
 \makeatletter % [add curpage/total page at the bottom](http://tex.stackexchange.com/questions/100838/beamer-dresden-theme-miniframes-appeareance-and-frame-number-insertion)
 \newcommand{\frameofframes}{/}
 \newcommand{\setframeofframes}[1]{\renewcommand{\frameofframes}{#1}}
@@ -27,15 +27,56 @@
     %   \hfill%
     %   {\usebeamerfont{institute in head/foot}\usebeamercolor[fg]{institute in head/foot}\insertshortinstitute}%
     % \end{beamercolorbox}%
-    \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
+    \begin{beamercolorbox}[ht=2.0ex,dp=1.125ex,%
       leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
-      {\usebeamerfont{title in head/foot}\insertshorttitle}%
+      % {\usebeamerfont{title in head/foot}\insertshorttitle}%
       \hfill%
       {\usebeamerfont{frame number}\usebeamercolor[fg]{frame number}\insertframenumber~\frameofframes~\inserttotalframenumber}
     \end{beamercolorbox}%
     \begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
     \end{beamercolorbox}
   }
+\makeatother
+
+% to make miniframes compatible with xelatex, see https://tex.stackexchange.com/a/369327
+\setbeamertemplate{mini frame in current section}
+{%
+  \visible<0>{\resizebox{0.1cm}{0.1cm}{o}}\kern-0.1cm%
+  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
+    \pgfpathcircle{\pgfpoint{0.05cm}{0.05cm}}{0.05cm}
+    \pgfusepath{stroke}
+  \end{pgfpicture}%
+}
+\setbeamertemplate{mini frame in current subsection}
+{%
+  \visible<0>{\resizebox{0.1cm}{0.1cm}{o}}\kern-0.1cm%
+  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
+    \pgfpathcircle{\pgfpoint{0.05cm}{0.05cm}}{0.05cm}
+    \pgfusepath{stroke}
+  \end{pgfpicture}%
+}
+
+% show only one bullet for one subsection, see https://tex.stackexchange.com/a/64419
+\makeatletter
+\patchcmd{\slideentry}{\advance\beamer@xpos by1\relax}{}{}{}
+\newcommand*{\nofurther@beamer@link}{\gdef\beamer@link(##1/##2){}}
+\pretocmd{\beamer@link}{\nofurther@beamer@link}{}{}
+\let\beamer@linkorig=\beamer@link
+\def\beamer@subsectionentry#1#2#3#4#5{\advance\beamer@xpos by1\relax\let\beamer@link=\beamer@linkorig}
+\makeatother
+
+% to hide some pages from the navigation bar by defining \miniframeoff and \miniframeon, see https://tex.stackexchange.com/a/45038
+\makeatletter
+\let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry
+\def\beamer@writeslidentry@miniframesoff{%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
+  {%else
+    % removed \addtocontents commands
+    \clearpage\beamer@notesactions%
+  }
+}
+\newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
+\newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
 \makeatother
 
 \useinnertheme{rectangles}
@@ -68,6 +109,10 @@
 \setbeamercolor{structure}{fg=qiushi}
 \setbeamercolor{subsection in sidebar}{fg=brown}
 \setbeamercolor{subsection in sidebar shaded}{fg=grey}
+
+\setbeamerfont{title}{series=\heiti}
+\setbeamerfont{frametitle}{series=\heiti}
+\setbeamerfont{framesubtitle}{series=\heiti}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\setbeamerfont{block title}{size={}}

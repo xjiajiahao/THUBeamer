@@ -1,4 +1,4 @@
-\documentclass[UTF8, xcolor=table]{beamer}
+\documentclass[UTF8, xcolor=table, compress]{beamer}
 %\usepackage{fontspec}
 %\setsansfont{宋体}
 % \setCJKmainfont[BoldFont={Adobe Heiti Std},ItalicFont={Adobe Kaiti Std}]{Adobe Song Std}
@@ -77,12 +77,11 @@
 
 \graphicspath{{figures/}}
 
-\title{\heiti 凸包围多面体生成算法及应用}
-%\author{唐磊}
-\author[唐磊]{(申请清华大学工学硕士学位论文答辩报告)\vskip 20pt学~~~~~~生：唐~~~~~磊~~~~~~~~\vskip 5pt 指导教师：雍~俊~海~教授}
-\institute[清华大学~软件学院~CG~\&~CAD~研究所]{\small \vskip 38pt计算机辅助设计图形学与可视化研究所}
+\title{对内存友好的确定性增量梯度方法}
+\author[谢嘉豪]{(申请浙江大学工学学士学位论文答辩报告)\vskip 20pt学~~~~~~生：谢~嘉~豪\vskip 5pt指导教师：钱~徽~教授}
+\institute[浙江大学~计算机科学与技术学院]{\small \vskip 70pt}
 %\date{2015-06-07}
-\date{\small \vskip -17pt二〇一五年六月}
+\date{\small \vskip -17pt二〇一八年六月}
 %\date{\today}
 
 
@@ -101,26 +100,26 @@
 %\end{picture}
 }
 
-  \section*{目录}
-  \frame {
-    \frametitle{\secname}
-   % \begin{multicols}{2}
-    \tableofcontents[sections={<1-5>}]
-  %\end{multicols}
-    \note{
-      我将按照下面如下的次序来介绍本人的工作，首先是课题背景和相关工作，然后介绍凸包围体生成算法和基于凸包围体的碰撞检测算法，最后进行总结。
-    }
-  }
-
-  \AtBeginSubsection[] {
-  \frame<handout:0> {
+\section{}  % a empty section to hide from the navigation bar
+\frame {
   \frametitle{目录}
-  \tableofcontents[current,currentsubsection,sections={<1-5>}]
-    }
-    \addtocounter{framenumber}{-1}  %目录页不计算页码
+ % \begin{multicols}{2}
+  \tableofcontents[sections={<1-5>}]
+%\end{multicols}
+  \note{
+    我将按照下面如下的次序来介绍本人的工作，首先是课题背景和相关工作，然后介绍凸包围体生成算法和基于凸包围体的碰撞检测算法，最后进行总结。
   }
+}
 
-  \include{ppt01}
-  \include{ppt04}
+\AtBeginSubsection[] {
+\frame<handout:0> {
+\frametitle{目录}
+\tableofcontents[current,currentsubsection,sections={<1-5>}]
+  }
+  \addtocounter{framenumber}{-1}  %目录页不计算页码
+}
+
+\include{ppt01}
+\include{ppt04}
 
 \end{document}
