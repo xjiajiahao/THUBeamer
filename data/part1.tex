@@ -1,0 +1,47 @@
+\section{介绍}
+\miniframesoff
+
+%\subsection{课题背景和意义}
+\frame
+{
+\frametitle{课题背景和意义}
+\begin{block}{增量梯度方法}
+  \begin{itemize}
+    \item 机器学习领域中应用最广泛的一类优化方法
+    \item 每次迭代只需计算少量的数据样本所对应的目标函数梯度
+    \item 优点：迭代速度快、计算和存储复杂度较低、扩展性好等等
+    \item 按抽取数据样本的方式可分为两类：
+      \begin{itemize}
+        \item 随机方法——随机梯度下降（SGD）及其变种
+        \item \textbf{确定性方法}
+      \end{itemize}
+  \end{itemize}
+\end{block}
+
+\pause
+
+\begin{block}{选题意义}
+  \begin{itemize}
+    \item 理论意义：有助于理解一般增量梯度方法的收敛性质
+    \item 实践意义：有助于提高机器学习算法的实用性和可扩展性
+  \end{itemize}
+\end{block}
+}
+
+\frame
+{
+\frametitle{研究现状}
+@TODO
+}
+
+\frame
+{
+\frametitle{本文工作}
+\begin{itemize}
+  \item 提出了“基于快照的增量梯度方法”（SIG）及其加速变种 \vspace*{1em}
+  \item 证明了所提出的SIG方法达到线性收敛 \vspace*{1em}
+  \item 将SIG算法推广到更一般的单调算子零点问题上，证明了在这一类问题上同样达到线性收敛
+\end{itemize}
+}
+
+\miniframeson

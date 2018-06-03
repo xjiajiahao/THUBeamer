@@ -78,7 +78,7 @@
 \graphicspath{{figures/}}
 
 \title{对内存友好的确定性增量梯度方法}
-\author[谢嘉豪]{(申请浙江大学工学学士学位论文答辩报告)\vskip 20pt学~~~~~~生：谢~嘉~豪\vskip 5pt指导教师：钱~徽~教授}
+\author[谢嘉豪]{(申请浙江大学工学学士学位论文答辩报告)\vskip 20pt答辩人：谢嘉豪\vskip 5pt指导教师：钱~徽~教授}
 \institute[浙江大学~计算机科学与技术学院]{\small \vskip 70pt}
 %\date{2015-06-07}
 \date{\small \vskip -17pt二〇一八年六月}
@@ -104,7 +104,7 @@
 \frame {
   \frametitle{目录}
  % \begin{multicols}{2}
-  \tableofcontents[sections={<1-5>}]
+  \tableofcontents
 %\end{multicols}
   \note{
     我将按照下面如下的次序来介绍本人的工作，首先是课题背景和相关工作，然后介绍凸包围体生成算法和基于凸包围体的碰撞检测算法，最后进行总结。
@@ -114,12 +114,15 @@
 \AtBeginSubsection[] {
 \frame<handout:0> {
 \frametitle{目录}
-\tableofcontents[current,currentsubsection,sections={<1-5>}]
+\tableofcontents[current,currentsubsection]
   }
   \addtocounter{framenumber}{-1}  %目录页不计算页码
 }
 
-\include{ppt01}
-\include{ppt04}
+\include{data/part1}
+\include{data/part2}
+\include{data/part3}
+\include{data/part4}
+\include{data/part5}
 
 \end{document}
