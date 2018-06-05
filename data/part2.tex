@@ -42,7 +42,7 @@ $\underset{w \in \mathbb{R}^d}{\text{min}}\ F(w) = \frac{1}{N}\sum_{i=1}^{N} f_i
     $$
     \item 非凸优化的重要子问题：
     $$
-	\min_{w} \frac{1}{N}\sum_{i=1}^{N}\phi_i(w) + \frac{L}{2}\|w - \tilde{w}\|^2
+	\underset{w}{\text{min}} \frac{1}{N}\sum_{i=1}^{N}\phi_i(w) + \frac{L}{2}\|w - \tilde{w}\|^2
     $$
 
 \end{itemize}
@@ -74,7 +74,7 @@ $\underset{w \in \mathbb{R}^d}{\text{min}}\ F(w) = \frac{1}{N}\sum_{i=1}^{N} f_i
     $w_{t+1}^{s} = w_t^s - \eta \big(\alert<4>{\nabla f_{i_t}(w_t^s) - \nabla f_{i_t}(w_0^s) + G} \big)$ \
 
     }
-    $w_0^{s+1} = w_N^s$ \
+    \alert<5>{$w_0^{s+1} = w_N^s$} \only<5>{\alert{更新快照点}}\
 }
 \Return{$w_0^S$}
 \end{algorithm}
@@ -94,15 +94,18 @@ $\underset{w \in \mathbb{R}^d}{\text{min}}\ F(w) = \frac{1}{N}\sum_{i=1}^{N} f_i
     \end{itemize}
 \end{block}
 
-\pause
 
-\begin{block}{与SVRG\uncover<2->{\footnote{Johnson \& Zhang, Accelerating stochastic gradient descent using predictive variance reduction. NIPS 2013.}}算法的关系}
+\onslide<2->
+{
+\begin{block}{与SVRG\footnote{Johnson \& Zhang, Accelerating stochastic gradient descent using predictive variance reduction. NIPS 2013.}算法的关系}
     \begin{itemize}
         \item 使用几乎相同的梯度估计量
         \item SVRG：随机访问样本数据，SIG：循环顺序访问
         \item SVRG：内循环长度依赖于问题的条件数，SIG：把样本数作为内循环长度
     \end{itemize}
 \end{block}
+}
+
 }
 
 \frame
@@ -117,7 +120,7 @@ $\underset{w \in \mathbb{R}^d}{\text{min}}\ F(w) = \frac{1}{N}\sum_{i=1}^{N} f_i
 		\hline
 		算法 & SGD & SVRG & SAGA & DIG & IAG & SIG \\ \hline
 		\begin{tabular}[c]{@{}c@{}}数据访问方式\\  (读/写)\end{tabular}              & 只读   & 只读    & 读+写  & 只读  & 读+写 & 只读   \\ \hline
-		\begin{tabular}[c]{@{}c@{}}组成函数选择方式 \\ (随机/确定性)\end{tabular} & 随机   & 确定性    & 随机性    & 确定性  & 确定性   & 确定性   \\ \hline
+		\begin{tabular}[c]{@{}c@{}}组成函数选择方式 \\ (随机/确定)\end{tabular} & 随机   & 随机    & 随机    & 确定  & 确定   & 确定   \\ \hline
 		存储复杂度 & $\mathcal{O}(d)$ & $\mathcal{O}(d)$ & $\mathcal{O}(Nd)$ & $\mathcal{O}(d)$ & $\mathcal{O}(Nd)$ & $\mathcal{O}(d)$ \\ \hline
 		线性收敛？ & $\times$  & \checkmark  &  \checkmark  & $\times$ & \checkmark & \checkmark \\ \hline
 	\end{tabular}
@@ -133,6 +136,8 @@ SIG-M：引入动量（Momentum）\footnote{Allen-Zhu, Katyusha: The first direc
 
 \pause
 
+{
+\setlength{\interspacetitleruled}{-.4pt}%
 \begin{algorithm}[H]
   \SetKwInOut{Input}{input}
   \SetKwInOut{Return}{return}
@@ -163,6 +168,8 @@ SIG-M：引入动量（Momentum）\footnote{Allen-Zhu, Katyusha: The first direc
   }
   \Return{$w_0^S$}
 \end{algorithm}
+}
+
 }
 
 

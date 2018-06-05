@@ -9,12 +9,12 @@
     \begin{itemize}
         \item 带$\ell_2$正则项的逻辑回归（LR）：
         $$
-          \underset{w \in \mathbb{R}^d}{\mathrm{min}} \ \frac{1}{N} \sum_{i=1}^{N}
-          \mathrm{log}\big( 1 + \mathrm{exp}(-y_i X_i^T w) \big) + \frac{\lambda}{2} \|w\|_2^2,
+          \underset{w \in \mathbb{R}^d}{\text{min}} \ \frac{1}{N} \sum_{i=1}^{N}
+          \text{log}\big( 1 + \text{exp}(-y_i X_i^T w) \big) + \frac{\lambda}{2} \|w\|_2^2,
         $$
         \item 带$\ell_2$正则项的平方铰链损失（SVM）：
         $$
-           \underset{w \in \mathbb{R}^d}{\mathrm{min}} \ \frac{1}{N} \sum_{i=1}^{N}
+           \underset{w \in \mathbb{R}^d}{\text{min}} \ \frac{1}{N} \sum_{i=1}^{N}
            \big( [1 - y_i X_i^T w]_{+} \big)^2 + \frac{\lambda}{2} \|w\|_2^2,
         $$
     \end{itemize}
