@@ -10,6 +10,8 @@
 $\underset{w \in \mathbb{R}^d}{\text{min}}\ F(w) = \frac{1}{N}\sum_{i=1}^{N} f_i(w)$
 \end{block}
 
+\pause
+
 \begin{block}{假设}
 \begin{itemize}
     \item \textbf{（Lipschitz光滑假设）}\
@@ -23,6 +25,9 @@ $\underset{w \in \mathbb{R}^d}{\text{min}}\ F(w) = \frac{1}{N}\sum_{i=1}^{N} f_i
     $$
 	    (\nabla F(w_1) - \nabla F(w_2))^T(w_1 - w_2) \ge \mu \| w_1 - w_2 \|^2.
     $$
+
+    \item 定义问题的条件数为$\kappa = L / \mu$
+
 \end{itemize}
 \end{block}
 }
@@ -48,6 +53,9 @@ $\underset{w \in \mathbb{R}^d}{\text{min}}\ F(w) = \frac{1}{N}\sum_{i=1}^{N} f_i
 {
 \frametitle{\subsecname~ }
 基于快照的确定性增量梯度（Snapshot-based Incremental Gradient，简称 SIG）方法：
+
+{
+\setlength{\interspacetitleruled}{-.4pt}%
 \begin{algorithm}[H]
 \SetKwInOut{Input}{input}
 \SetKwInOut{Return}{return}
@@ -55,22 +63,23 @@ $\underset{w \in \mathbb{R}^d}{\text{min}}\ F(w) = \frac{1}{N}\sum_{i=1}^{N} f_i
 \Input{$\eta$, $w_0^0$, S} \
 \For{$s = 0, 1, \ldots, S-1$}
 {
-    compute $G = \frac{1}{N} \sum_{i=1}^{N} \nabla f_i(w_0^s)$ \
+    \alert<2>{compute $G = \frac{1}{N} \sum_{i=1}^{N} \nabla f_i(w_0^s)$} \
 
     \For{$t = 0, \ldots, N-1$}
     {
-    $i_t = t+1$ \
+    \alert<3>{$i_t = t+1$} \
 
     %$i_t = \sigma^s(i+1)$, $\sigma^s$ can be any peretatation on $\{1,\ldots,N\}$\
 
-    $w_{t+1}^{s} = w_t^s - \eta \big(\nabla f_{i_t}(w_t^s) - \nabla f_{i_t}(w_0^s) + G \big)$ \
+    $w_{t+1}^{s} = w_t^s - \eta \big(\alert<4>{\nabla f_{i_t}(w_t^s) - \nabla f_{i_t}(w_0^s) + G} \big)$ \
 
     }
     $w_0^{s+1} = w_N^s$ \
 }
 \Return{$w_0^S$}
-\caption{SIG算法}
 \end{algorithm}
+}
+
 }
 
 \frame
@@ -85,7 +94,9 @@ $\underset{w \in \mathbb{R}^d}{\text{min}}\ F(w) = \frac{1}{N}\sum_{i=1}^{N} f_i
     \end{itemize}
 \end{block}
 
-\begin{block}{与SVRG\footnote{Johnson \& Zhang, Accelerating stochastic gradient descent using predictive variance reduction, NIPS 2013}算法的关系}
+\pause
+
+\begin{block}{与SVRG\uncover<2->{\footnote{Johnson \& Zhang, Accelerating stochastic gradient descent using predictive variance reduction. NIPS 2013.}}算法的关系}
     \begin{itemize}
         \item 使用几乎相同的梯度估计量
         \item SVRG：随机访问样本数据，SIG：循环顺序访问
@@ -118,6 +129,10 @@ $\underset{w \in \mathbb{R}^d}{\text{min}}\ F(w) = \frac{1}{N}\sum_{i=1}^{N} f_i
 \frame
 {
 % \footnotesize
+SIG-M：引入动量（Momentum）\footnote{Allen-Zhu, Katyusha: The first direct acceleration of stochastic gradient methods. ACM STOC, 2017.}来加速SIG的收敛
+
+\pause
+
 \begin{algorithm}[H]
   \SetKwInOut{Input}{input}
   \SetKwInOut{Return}{return}
@@ -135,11 +150,11 @@ $\underset{w \in \mathbb{R}^d}{\text{min}}\ F(w) = \frac{1}{N}\sum_{i=1}^{N} f_i
 
     %$i_t = \sigma^s(i+1)$, $\sigma^s$ can be any peretatation on $\{1,\ldots,N\}$\
 
-    $w_{t+1}^{s} = \tau_1 z_t^s + \tau_2 w_0^s + (1 - \tau_1 - \tau_2) y_t^s$ \
+    \alert<4>{$w_{t+1}^{s} = \tau_1 z_t^s + \tau_2 w_0^s + (1 - \tau_1 - \tau_2) y_t^s$} \
 
-    $z_{t+1}^s = z_t^s - \alpha \big(\nabla f_{i_t}(w_t^s) - \nabla f_{i_t}(w_0^s) + G \big)$ \
+    \alert<3>{$z_{t+1}^s = z_t^s - \alpha \big(\nabla f_{i_t}(w_t^s) - \nabla f_{i_t}(w_0^s) + G \big)$} \
 
-    $y_{t+1}^s = w_{t+1}^s + \tau_1 (z_{t+1}^s - z_t^s)$ \
+    \alert<3>{$y_{t+1}^s = w_{t+1}^s + \tau_1 (z_{t+1}^s - z_t^s)$} \
     % $y_{t+1}^s = w_{t+1}^s - \frac{1}{3 L} \big(\nabla f_{i_t}(w_t^s) - \nabla f_{i_t}(w_0^s) + G \big) $ \
 
    }
@@ -147,7 +162,6 @@ $\underset{w \in \mathbb{R}^d}{\text{min}}\ F(w) = \frac{1}{N}\sum_{i=1}^{N} f_i
 
   }
   \Return{$w_0^S$}
-  \caption{SIG-M算法}
 \end{algorithm}
 }
 

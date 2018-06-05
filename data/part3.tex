@@ -1,8 +1,103 @@
-\section{理论分析}
-\miniframesoff
+\section{理论结果}
+\subsection{线性收敛结果}
   \frame
   {
-    \frametitle{\secname~ }
+    \frametitle{扰动分析框架}
+    \footnotesize
+    SIG内循环迭代：    $w_{t+1}^{s} = w_t^s - \eta \big(\nabla f_{i_t}(w_t^s) - \nabla f_{i_t}(w_0^s) + \frac{1}{N} \sum_{i=1}^{N} \nabla f_i(w_0^s) \big)$ \\~\\
+
+\pause
+
+    由于采用循环顺序访问数据样本，则对$t = 0, \ldots, N-1$求和得：
+    $$
+    \begin{aligned}
+    w_0^{s+1} &= w_0^s - \eta\sum_{t=0}^{N-1} \nabla f_{t+1} (\alert<4->{w_t^s}) &\;\; \text{SIG} \\
+\pause
+    w_0^{s+1} &= w_0^s - \eta\sum_{i=1}^{N} \nabla f_{i} (\alert<4->{w_0^s}) &\;\; \text{梯度下降}
+    \end{aligned}
+    $$ \\~\\
+
+\pause
+
+    于是，可以将SIG当做\alert<5>{受扰动的梯度下降}来分析
 
   }
-\miniframeson
+
+  \frame
+  {
+    \begin{block}{}
+    \frametitle{重要引理：梯度误差上界}
+    在光滑假设下，令SIG算法的步长$\eta$满足$\eta < \frac{1}{NL}$，那么
+    $$
+      \sum_{t=0}^{N-1} \| \nabla f_{i_t}(w_t^s)\! -\! \nabla f_{i_t}(w_0^s) \|
+      \le \frac{\eta L^2 N^2}{2(1 - \eta L N)} \| w_0^s\! -\! w^* \|
+    $$ \\~\\
+    \end{block}
+
+    \pause
+    % \footnotesize
+    这说明梯度估计量受到的扰动将随算法收敛而逐渐趋于0
+  }
+
+
+  \frame
+  {
+    \frametitle{定理1}
+    \begin{block}{}
+    在强凸和光滑假设下，令步长$\eta \le \mu/(2L^2N)$，则迭代参数到最优点的距离$\|w_0^s - w^*\|$线性收敛：
+    $$
+    \| w_0^{s+1} - w^* \| \le \alpha \| w_0^{s} - w^* \|,
+    $$
+    其中$\alpha = 1 - \frac{1}{2} \eta \mu N < 1$.
+    \end{block}
+
+    \footnotesize
+    \begin{itemize}
+        \item 定理1不仅适用于确定性的样本选择顺序，也适用于任意排列顺序
+        \item SIG算法达到$\epsilon$精度的最坏复杂度（迭代次数）为$\mathcal{O}(\alert{N\kappa^2} \text{log}(1/\epsilon))$， \\
+        而IAG算法的最坏复杂度为$\mathcal{O}(\alert{N^2 \kappa} \text{log}(1/\epsilon))$
+    \end{itemize}
+  }
+
+\subsection{推广：单调算子}
+  \frame
+  {
+    \frametitle{单调算子的零点问题}
+    \footnotesize
+    SIG算法可推广到求解单调算子的零点问题：$0 \in B(w) = \frac{1}{n}\sum_{i=1}^n B_i(w)$ \\~\\
+
+    \pause
+
+    \textbf{假设：}
+    \begin{itemize}
+        \item 假设每个$B_i(\cdot)$均有Lipschitz常数$L > 0$，即
+        $$
+        \| B_i(w_1) - B_i(w_2) \|_2 \le L \| w_1 - w_2 \|_2 \;\; \forall w_1, w_2 \in \mathbb{R}^d
+        $$
+        \item $B(\cdot)$是$\mu$-强单调算子，即
+        $$
+        \langle B(w_1) - B(w_2), w_1 - w_2 \rangle \le \mu \| w_1 - w_2 \|^2, \;\; \forall w_1, w_2 \in \mathbb{R}^d
+        $$
+    \end{itemize}
+
+    \pause
+    \begin{block}{}
+    \textbf{应用：}鞍点问题，即$\underset{w \in \mathbb{R}^d}{\mathrm{min}} \ \underset{u \in \mathbb{R}^p}{\mathrm{max}} F(w, u)$
+    \begin{itemize}
+        \item $F$对第一个变量是凸函数，对第二个变量是凹函数
+        \item 具体应用：分类模型的 ROC 曲线下面积最大化问题，图像处理中的去噪、去抖动问题
+    \end{itemize}
+    \end{block}
+  }
+
+  \frame
+  {
+    \frametitle{定理2}
+    \begin{block}{}
+    在Lipschitz和强单调假设下，令步长$\eta \le \mu/(2L^2N)$，则迭代参数到最优点的距离$\|w_0^s - w^*\|$线性收敛：
+    $$
+    \| w_0^{s+1} - w^* \| \le \beta \| w_0^{s} - w^* \|,
+    $$
+    其中$\beta = 1 - \frac{1}{4} \eta \mu N < 1$.
+    \end{block}
+  }

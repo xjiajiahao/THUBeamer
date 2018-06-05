@@ -31,7 +31,44 @@
 \frame
 {
 \frametitle{研究现状}
-@TODO
+\footnotesize
+问题：$\underset{w \in \mathbb{R}^d}{\mathrm{min}} \ F(w) \coloneqq \frac{1}{N} \sum_{i=1}^N f_i(w) $， \pause 增量梯度方法：$w_{t+1} = w_t - \eta_t \ g(w_t, i_t)$ \\~\\
+\pause 其中$g$：真实梯度$\nabla F(w_t)$的估计量，$i_t$：第$t$次迭代选择的数据样本
+
+\pause
+
+\begin{block}{}
+选择数据样本：
+\begin{itemize}
+    \item 随机采样
+    \begin{itemize}
+        \item \alert<6>{可放回采样}：均匀采样、重要性采样、自适应采样
+        \item 不可放回采样：随机重排
+    \end{itemize}
+    \item 确定性顺序
+\end{itemize}
+\end{block}
+
+\pause
+
+\begin{block}{}
+设计梯度估计方式：
+\begin{itemize}
+    \item 单独近似：$g(w_t, i_t) = \nabla f_{i_t}(w_t)$
+    \item \alert<6>{平均近似}：$g(w_t, i_t) = \frac{1}{N}\sum_{i=1}^N\nabla f_i(w_{\tau_i})$
+    % \tikz[remember picture] \node[coordinate,yshift=0.5em] (n1) {};
+    \item \alert<6>{混合近似}：$g(w_t, i_t) = \nabla f_{i_t}(w_t) - \nabla f_{i_t}(\tilde{w}) + \nabla F(\tilde{w})$
+    \item \alert<6>{……}
+    % \tikz[remember picture] \node[coordinate] (n2) {};
+\end{itemize}
+\end{block}
+
+% \only<5>{\alert{
+% \begin{tikzpicture}[overlay,remember picture]
+%     \path (n2) -| node[coordinate] (n3) {} (n1);
+%     \draw[thick,decorate,decoration={brace,amplitude=3pt}]
+%           (n1) -- (n3) node[midway, right=4pt] {降方差方法};
+% \end{tikzpicture}}}
 }
 
 \frame
