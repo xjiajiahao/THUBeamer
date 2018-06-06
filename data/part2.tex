@@ -25,9 +25,7 @@ $\underset{w \in \mathbb{R}^d}{\text{min}}\ F(w) = \frac{1}{N}\sum_{i=1}^{N} f_i
     $$
 	    (\nabla F(w_1) - \nabla F(w_2))^T(w_1 - w_2) \ge \mu \| w_1 - w_2 \|^2.
     $$
-
-    \item 定义问题的条件数为$\kappa = L / \mu$
-
+    % \item 定义问题的条件数为$\kappa = L / \mu$
 \end{itemize}
 \end{block}
 }
@@ -36,14 +34,15 @@ $\underset{w \in \mathbb{R}^d}{\text{min}}\ F(w) = \frac{1}{N}\sum_{i=1}^{N} f_i
 {
 \frametitle{应用例子}
 \begin{itemize}
-    \item 经验风险最小化问题：带$l_2$惩罚项的最小二乘、逻辑回归、光滑SVM……
-    $$
-        F(w) = \frac{1}{N}\sum_{i=1}^N\phi(w^\top x_i, y_i) + \frac{\mu}{2}\|w\|^2
-    $$
-    \item 非凸优化的重要子问题：
-    $$
-	\underset{w}{\text{min}} \frac{1}{N}\sum_{i=1}^{N}\phi_i(w) + \frac{L}{2}\|w - \tilde{w}\|^2
-    $$
+    \item 经验风险最小化问题： \\
+    带$l_2$惩罚项的最小二乘、逻辑回归、光滑SVM……\\~\\
+    % $$
+    %     F(w) = \frac{1}{N}\sum_{i=1}^N\phi(w^\top x_i, y_i) + \frac{\mu}{2}\|w\|^2
+    % $$
+    \item 非凸优化的重要子问题
+    % $$
+	% \underset{w}{\text{min}} \frac{1}{N}\sum_{i=1}^{N}\phi_i(w) + \frac{L}{2}\|w - \tilde{w}\|^2
+    % $$
 
 \end{itemize}
 }
@@ -63,15 +62,15 @@ $\underset{w \in \mathbb{R}^d}{\text{min}}\ F(w) = \frac{1}{N}\sum_{i=1}^{N} f_i
 \Input{$\eta$, $w_0^0$, S} \
 \For{$s = 0, 1, \ldots, S-1$}
 {
-    \alert<2>{compute $G = \frac{1}{N} \sum_{i=1}^{N} \nabla f_i(w_0^s)$} \
+    \alert<2>{compute $G = \frac{1}{N} \sum_{i=1}^{N} \nabla f_i(w_0^s)$} \only<2>{\alert{计算快照点的真实梯度}}\
 
     \For{$t = 0, \ldots, N-1$}
     {
-    \alert<3>{$i_t = t+1$} \
+    \alert<3>{$i_t = t+1$} \only<3>{\alert{顺序选择数据样本}}\
 
     %$i_t = \sigma^s(i+1)$, $\sigma^s$ can be any peretatation on $\{1,\ldots,N\}$\
 
-    $w_{t+1}^{s} = w_t^s - \eta \big(\alert<4>{\nabla f_{i_t}(w_t^s) - \nabla f_{i_t}(w_0^s) + G} \big)$ \
+    \alert<4>{$w_{t+1}^{s} = w_t^s - \eta \big(\nabla f_{i_t}(w_t^s) - \nabla f_{i_t}(w_0^s) + G \big)$} \only<4>{\alert{更新迭代变量}}\
 
     }
     \alert<5>{$w_0^{s+1} = w_N^s$} \only<5>{\alert{更新快照点}}\
@@ -95,38 +94,38 @@ $\underset{w \in \mathbb{R}^d}{\text{min}}\ F(w) = \frac{1}{N}\sum_{i=1}^{N} f_i
 \end{block}
 
 
-\onslide<2->
-{
-\begin{block}{与SVRG\footnote{Johnson \& Zhang, Accelerating stochastic gradient descent using predictive variance reduction. NIPS 2013.}算法的关系}
-    \begin{itemize}
-        \item 使用几乎相同的梯度估计量
-        \item SVRG：随机访问样本数据，SIG：循环顺序访问
-        \item SVRG：内循环长度依赖于问题的条件数，SIG：把样本数作为内循环长度
-    \end{itemize}
-\end{block}
-}
+% \onslide<2->
+% {
+% \begin{block}{与SVRG\footnote{Johnson \& Zhang, Accelerating stochastic gradient descent using predictive variance reduction. NIPS 2013.}算法的关系}
+%     \begin{itemize}
+%         \item 使用几乎相同的梯度估计量
+%         \item SVRG：随机访问样本数据，SIG：循环顺序访问
+%         \item SVRG：内循环长度依赖于问题的条件数，SIG：把样本数作为内循环长度
+%     \end{itemize}
+% \end{block}
+% }
 
 }
 
-\frame
-{
-\frametitle{与现有方法的比较}
-\footnotesize
-\begin{table}[H]
-	\centering
-	\caption{SGD、SVRG、 SAGA、 DIG、 IAG和SIG方法的比较}
-	\label{table:methods}
-	\begin{tabular}{|c|c|c|c|c|c|>{\columncolor[gray]{0.8}}c|}
-		\hline
-		算法 & SGD & SVRG & SAGA & DIG & IAG & SIG \\ \hline
-		\begin{tabular}[c]{@{}c@{}}数据访问方式\\  (读/写)\end{tabular}              & 只读   & 只读    & 读+写  & 只读  & 读+写 & 只读   \\ \hline
-		\begin{tabular}[c]{@{}c@{}}组成函数选择方式 \\ (随机/确定)\end{tabular} & 随机   & 随机    & 随机    & 确定  & 确定   & 确定   \\ \hline
-		存储复杂度 & $\mathcal{O}(d)$ & $\mathcal{O}(d)$ & $\mathcal{O}(Nd)$ & $\mathcal{O}(d)$ & $\mathcal{O}(Nd)$ & $\mathcal{O}(d)$ \\ \hline
-		线性收敛？ & $\times$  & \checkmark  &  \checkmark  & $\times$ & \checkmark & \checkmark \\ \hline
-	\end{tabular}
-\end{table}
-
-}
+% \frame
+% {
+% \frametitle{与现有方法的比较}
+% \footnotesize
+% \begin{table}[H]
+% 	\centering
+% 	\caption{SGD、SVRG、 SAGA、 DIG、 IAG和SIG方法的比较}
+% 	\label{table:methods}
+% 	\begin{tabular}{|c|c|c|c|c|c|>{\columncolor[gray]{0.8}}c|}
+% 		\hline
+% 		算法 & SGD & SVRG & SAGA & DIG & IAG & SIG \\ \hline
+% 		\begin{tabular}[c]{@{}c@{}}数据访问方式\\  (读/写)\end{tabular}              & 只读   & 只读    & 读+写  & 只读  & 读+写 & 只读   \\ \hline
+% 		\begin{tabular}[c]{@{}c@{}}组成函数选择方式 \\ (随机/确定)\end{tabular} & 随机   & 随机    & 随机    & 确定  & 确定   & 确定   \\ \hline
+% 		存储复杂度 & $\mathcal{O}(d)$ & $\mathcal{O}(d)$ & $\mathcal{O}(Nd)$ & $\mathcal{O}(d)$ & $\mathcal{O}(Nd)$ & $\mathcal{O}(d)$ \\ \hline
+% 		线性收敛？ & $\times$  & \checkmark  &  \checkmark  & $\times$ & \checkmark & \checkmark \\ \hline
+% 	\end{tabular}
+% \end{table}
+%
+% }
 
 \subsection{SIG-M算法}
 \frame

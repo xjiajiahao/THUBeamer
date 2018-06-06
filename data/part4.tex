@@ -7,18 +7,18 @@
     \footnotesize
     实验中考虑的优化问题（模型）有：
     \begin{itemize}
-        \item 带$\ell_2$正则项的逻辑回归（LR）：
-        $$
-          \underset{w \in \mathbb{R}^d}{\text{min}} \ \frac{1}{N} \sum_{i=1}^{N}
-          \text{log}\big( 1 + \text{exp}(-y_i X_i^T w) \big) + \frac{\lambda}{2} \|w\|_2^2,
-        $$
-        \item 带$\ell_2$正则项的平方铰链损失（SVM）：
-        $$
-           \underset{w \in \mathbb{R}^d}{\text{min}} \ \frac{1}{N} \sum_{i=1}^{N}
-           \big( [1 - y_i X_i^T w]_{+} \big)^2 + \frac{\lambda}{2} \|w\|_2^2,
-        $$
+        \item 带$\ell_2$正则项的逻辑回归（LR）\\~\\
+        % $$
+        %   \underset{w \in \mathbb{R}^d}{\text{min}} \ \frac{1}{N} \sum_{i=1}^{N}
+        %   \text{log}\big( 1 + \text{exp}(-y_i X_i^T w) \big) + \frac{\lambda}{2} \|w\|_2^2,
+        % $$
+        \item 带$\ell_2$正则项的平方铰链损失（SVM）
+        % $$
+        %    \underset{w \in \mathbb{R}^d}{\text{min}} \ \frac{1}{N} \sum_{i=1}^{N}
+        %    \big( [1 - y_i X_i^T w]_{+} \big)^2 + \frac{\lambda}{2} \|w\|_2^2,
+        % $$
     \end{itemize}
-    $X_i \in \mathbb{R}^d$和$y_i \in \{ -1, 1\}$分别表示第$i$个样本和它的标签。
+    % $X_i \in \mathbb{R}^d$和$y_i \in \{ -1, 1\}$分别表示第$i$个样本和它的标签。
   }
 
   \frame
@@ -45,8 +45,8 @@
 
     \begin{itemize}
         \item 比较的算法：SIG，SIG-M，IAG，DIG，SVRG，Katyusha，SAGA，GD等
-        \item Matlab内嵌C/C++代码实现，算法的主干部分用C语言实现
-        \item 增量梯度方法均使用延迟更新技术实现，对稀疏数据能大大降低计算量
+        % \item Matlab内嵌C/C++代码实现，算法的主干部分用C语言实现
+        % \item 增量梯度方法均使用延迟更新技术实现，对稀疏数据能大大降低计算量
     \end{itemize}
   }
 
@@ -58,40 +58,51 @@
     \footnotesize
     % 小数据集（MNIST，rcv1和a9a）上的结果
     % \uncover<1-2>
-    \begin{overlayarea}{11.5cm}{4cm}
-    {
-        \only<1-2>{
-            \begin{figure}[H]
-              \includegraphics[trim={3.5cm 23cm 3.5cm 2cm},clip,width=11.5cm]{data/img/figure3}
-            \end{figure}
-        }
-        \only<3>{
-            \vspace*{1cm}
-            \begin{itemize}
-                \item 横坐标表示外循环次数
-                \item 纵坐标表示迭代变量到最优解的相对距离$(\|w_0^s - w^*\|^2) / (\|w_0^0 - w^*\|^2)$
-            \end{itemize}
-        }
-    }
-    \end{overlayarea}
+    % \begin{overlayarea}{11.5cm}{4cm}
+    % {
+    %     \only<1-2>{
+    %         \begin{figure}[H]
+    %           \includegraphics[trim={3.5cm 23cm 3.5cm 2cm},clip,width=11.5cm]{data/img/figure3}
+    %         \end{figure}
+    %     }
+    %     \only<3>{
+    %         \vspace*{1cm}
+    %         \begin{itemize}
+    %             \item 横坐标表示外循环次数
+    %             \item 纵坐标表示迭代变量到最优解的相对距离$(\|w_0^s - w^*\|^2) / (\|w_0^0 - w^*\|^2)$
+    %         \end{itemize}
+    %     }
+    % }
+    % \end{overlayarea}
+    %
+    % \begin{overlayarea}{11.5cm}{4cm}
+    % {
+    %     \only<1>{
+    %         \begin{itemize}
+    %             \item 横坐标表示外循环次数
+    %             \item 纵坐标表示目标函数值的相对精度$(F(w_0^s) - F(w^*)) / (F(w_0^0) - F(w^*))$
+    %         \end{itemize}
+    %     }
+    %     \only<2-3>{
+    %         \vspace*{-0.5cm}
+    %         \begin{figure}[H]
+    %           \includegraphics[trim={3.5cm 12.5cm 3.5cm 13cm},clip,width=11.5cm]{data/img/figure3}
+    %           \caption{SIG，SIG-M及其他算法在MNIST、rcv1.binary和a9a数据集上的比较}
+    %         \end{figure}
+    %     }
+    % }
+    % \end{overlayarea}
 
-    \begin{overlayarea}{11.5cm}{4cm}
-    {
-        \only<1>{
-            \begin{itemize}
-                \item 横坐标表示外循环次数
-                \item 纵坐标表示目标函数值的相对精度$(F(w_0^s) - F(w^*)) / (F(w_0^0) - F(w^*))$
-            \end{itemize}
-        }
-        \only<2-3>{
-            \vspace*{-0.5cm}
-            \begin{figure}[H]
-              \includegraphics[trim={3.5cm 12.5cm 3.5cm 13cm},clip,width=11.5cm]{data/img/figure3}
-              \caption{SIG，SIG-M及其他算法在MNIST、rcv1.binary和a9a数据集上的比较}
-            \end{figure}
-        }
-    }
-    \end{overlayarea}
+    \begin{figure}[H]
+      \includegraphics[trim={3.5cm 23cm 3.5cm 2cm},clip,width=11.5cm]{data/img/figure3}
+      \caption{SIG，SIG-M及其他算法在MNIST、rcv1.binary和a9a数据集上的比较}
+    \end{figure}
+
+    \begin{itemize}
+        \item 横坐标表示外循环次数
+        \item 纵坐标表示目标函数值的相对精度$(F(w_0^s) - F(w^*)) / (F(w_0^0) - F(w^*))$
+    \end{itemize}
+
   }
 
   \subsection{大数据集上的实验}

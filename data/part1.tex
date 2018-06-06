@@ -9,8 +9,8 @@
   \begin{itemize}
     \item 机器学习领域中应用最广泛的一类优化方法
     \item 每次迭代只需计算少量的数据样本所对应的目标函数梯度
-    \item 优点：迭代速度快、计算和存储复杂度较低、扩展性好等等
-    \item 按抽取数据样本的方式可分为两类：
+    % \item 优点：迭代速度快、计算和存储复杂度较低、扩展性好等等
+    \item 分类：
       \begin{itemize}
         \item 随机方法——随机梯度下降（SGD）及其变种
         \item \textbf{确定性方法}
@@ -33,32 +33,32 @@
 \frametitle{研究现状}
 \footnotesize
 问题：$\underset{w \in \mathbb{R}^d}{\text{min}} \ F(w) \coloneqq \frac{1}{N} \sum_{i=1}^N f_i(w) $， \pause 增量梯度方法：$w_{t+1} = w_t - \eta_t \ g(w_t, i_t)$ \\~\\
-\pause 其中$g$：真实梯度$\nabla F(w_t)$的估计量，$i_t$：第$t$次迭代选择的数据样本
+\pause 其中$g$：真实梯度$\nabla F(w_t)$的估计，$i_t$：数据样本
 
 \pause
 
 \begin{block}{}
 选择数据样本：
 \begin{itemize}
-    \item 随机采样
-    \begin{itemize}
-        \item \alert<6>{可放回采样}：均匀采样、重要性采样、自适应采样
-        \item 不可放回采样：随机重排
-    \end{itemize}
-    \item 确定性顺序
+    \item 随机采样：SGD、SVRG、SAG、SAGA……
+    % \begin{itemize}
+    %     \item 可放回采样%：均匀采样、重要性采样、自适应采样
+    %     \item 不可放回采样%：随机重排
+    % \end{itemize}
+    \item 确定性顺序：DIG、IAG
 \end{itemize}
 \end{block}
 
 \pause
 
 \begin{block}{}
-设计梯度估计方式：
+梯度估计方式：
 \begin{itemize}
     \item 单独近似：$g(w_t, i_t) = \nabla f_{i_t}(w_t)$
-    \item \alert<6>{平均近似}：$g(w_t, i_t) = \frac{1}{N}\sum_{i=1}^N\nabla f_i(w_{\tau_i})$
+    \item 平均近似：$g(w_t, i_t) = \frac{1}{N}\sum_{i=1}^N\nabla f_i(w_{\tau_i})$
     % \tikz[remember picture] \node[coordinate,yshift=0.5em] (n1) {};
-    \item \alert<6>{混合近似}：$g(w_t, i_t) = \nabla f_{i_t}(w_t) - \nabla f_{i_t}(\tilde{w}) + \nabla F(\tilde{w})$
-    \item \alert<6>{……}
+    \item 混合近似：$g(w_t, i_t) = \nabla f_{i_t}(w_t) - \nabla f_{i_t}(\tilde{w}) + \nabla F(\tilde{w})$
+    \item ……
     % \tikz[remember picture] \node[coordinate] (n2) {};
 \end{itemize}
 \end{block}

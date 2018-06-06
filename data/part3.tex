@@ -4,11 +4,11 @@
   {
     \frametitle{扰动分析框架}
     \footnotesize
-    SIG内循环迭代：    $w_{t+1}^{s} = w_t^s - \eta \big(\nabla f_{i_t}(w_t^s) - \nabla f_{i_t}(w_0^s) + \frac{1}{N} \sum_{i=1}^{N} \nabla f_i(w_0^s) \big)$ \\~\\
+    % SIG内循环迭代：    $w_{t+1}^{s} = w_t^s - \eta \big(\nabla f_{i_t}(w_t^s) - \nabla f_{i_t}(w_0^s) + \frac{1}{N} \sum_{i=1}^{N} \nabla f_i(w_0^s) \big)$ \\~\\
 
-\pause
+% \pause
 
-    由于采用循环顺序访问数据样本，则对$t = 0, \ldots, N-1$求和得：
+    由SIG内循环迭代公式和循环顺序的数据访问可得% ，则对$t = 0, \ldots, N-1$求和得：
     $$
     \begin{aligned}
     w_0^{s+1} &= w_0^s - \eta\sum_{t=0}^{N-1} \nabla f_{t+1} (\alert<4->{w_t^s}) &\;\; \text{SIG} \\
@@ -57,8 +57,8 @@
     \footnotesize
     \begin{itemize}
         \item 定理1不仅适用于确定性的样本选择顺序，也适用于任意排列顺序
-        \item SIG算法达到$\epsilon$精度的最坏复杂度（迭代次数）为$\mathcal{O}(N\kappa^2 \text{log}(1/\epsilon))$， \\
-        而IAG算法的最坏复杂度为$\mathcal{O}(N^2 \kappa \text{log}(1/\epsilon))$
+        % \item SIG算法达到$\epsilon$精度的最坏复杂度（迭代次数）为$\mathcal{O}(N\kappa^2 \text{log}(1/\epsilon))$， \\
+        % 而IAG算法的最坏复杂度为$\mathcal{O}(N^2 \kappa \text{log}(1/\epsilon))$
     \end{itemize}
   }
 
@@ -87,8 +87,8 @@
     \begin{block}{}
     \textbf{应用：}鞍点问题，即$\underset{w \in \mathbb{R}^d}{\text{min}} \ \underset{u \in \mathbb{R}^p}{\text{max}} F(w, u)$
     \begin{itemize}
-        \item $F$对第一个变量是凸函数，对第二个变量是凹函数
-        \item 具体应用：分类模型的 ROC 曲线下面积最大化问题，图像处理中的去噪、去抖动问题
+        % \item $F$对第一个变量是凸函数，对第二个变量是凹函数
+        \item 具体应用：二元分类模型的AUC问题，图像处理中的去噪、去抖动问题
     \end{itemize}
     \end{block}
   }
